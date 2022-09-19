@@ -1,4 +1,9 @@
-# ucas-covid19
+# 2022-9-19更新UCAS最新版本的国科大疫情防控打卡
+原来的版本已经不能适配最新的2022打卡功能，现在更新为2022年的打卡版本
+使用方法和原来的方法一样
+原项目：https://github.com/yuban01652/ucas-covid19
+
+# ucas-covid
 国科大疫情防控每日填报助手，用于解决忘记填写企业微信中身体状况每日打卡的问题。
 
 本人不对因为滥用此程序造成的后果负责，**请在合理且合法的范围内使用本程序**。
@@ -10,7 +15,7 @@
 # 用法
 1. 修改脚本内的sep账号和密码
 2. （可选）填写[server酱](http://sc.ftqq.com/3.version)的api，填写之后可以在程序完成打卡之后通知到微信，如果不填写不影响使用
-2. 放到服务器上，修改crontab，设定为每天八点半运行
+3. 放到服务器上，修改crontab，设定为每天八点半运行
 ```
 30 8 * * * /usr/bin/python3  /root/ncov-ucas/yqfk.py >>/tmp/yqfk.log
 ```
@@ -28,7 +33,7 @@ TZ=Asia/Shanghai
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 ```
 
-# serverless 
+# serverless
 如果你没有服务器，但是仍然想使用本程序，可以使用 serverless function，这里以腾讯云云函数为例。
 1. 登录注册腾讯云
 2. 打开`https://console.cloud.tencent.com/scf/`控制台的云函数页面，任选地区，点击`新建`
@@ -50,9 +55,6 @@ ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 即可, 完成之后, 每天 UTC 0 点就会进行填报, (北京时间 8 点).
 
-# 跋
-
-只接受PR，不接受需求。
 
 # 致谢
 - 感谢 [karuboniru](https://github.com/IanSmith123/ucas-covid19/pull/1) 提供的github actions 支持
@@ -60,6 +62,6 @@ ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">知识共享署名-非商业性使用-相同方式共享 3.0 未本地化版本许可协议</a>进行许可。
 
 
-Les1ie
+Les1ie 2020-4-5 23:56:52
 
-2020-4-5 23:56:52
+SivanLaai 2022-9-19 11:57:52

@@ -1,6 +1,6 @@
 """
-author: Les1ie
-mail: me@les1ie.com
+author: Les1ie, SivanLaai
+mail: me@les1ie.com, lyhhap@163.com
 license: CC BY-NC-SA 3.0
 """
 
@@ -8,12 +8,11 @@ import pytz
 import requests
 from datetime import datetime
 
-
 s = requests.Session()
 
-user = "USERNAME"    # sep账号
-passwd = "PASSWORD"   # sep密码
-api_key = "API_KEY"  # server酱的api，填了可以微信通知打卡结果，不填没影响
+user = "username"    # sep账号
+passwd = "password"   # sep密码
+api_key = ""  # server酱的api，填了可以微信通知打卡结果，不填没影响
 
 
 def login(s: requests.Session, username, password):
@@ -34,7 +33,7 @@ def login(s: requests.Session, username, password):
 
 
 def get_daily(s: requests.Session):
-    daily = s.get("https://app.ucas.ac.cn/ncov/api/default/daily?xgh=0&app_id=ucas")
+    daily = s.get("https://app.ucas.ac.cn/ucasncov/api/default/daily?xgh=0&app_id=ucas")
     # info = s.get("https://app.ucas.ac.cn/ncov/api/default/index?xgh=0&app_id=ucas")
     j = daily.json()
     d = j.get('d', None)
@@ -48,37 +47,62 @@ def get_daily(s: requests.Session):
 
 def submit(s: requests.Session, old: dict):
     new_daily = {
-        'realname': old['realname'],
-        'number': old['number'],
-        'szgj_api_info': old['szgj_api_info'],
-        'sfzx': old['sfzx'],
-        'szdd': old['szdd'],
-        'ismoved': old['ismoved'],
-        'tw': old['tw'],
-        'sftjwh': old['sfsfbh'],
-        'sftjhb': old['sftjhb'],
-        'sfcxtz': old['sfcxtz'],
-        'sfjcwhry': old['sfjcwhry'],
-        'sfjchbry': old['sfjchbry'],
-        'sfjcbh': old['sfjcbh'],
-        'sfcyglq': old['sfcyglq'],
-        'sfcxzysx': old['sfcxzysx'],
-        'old_szdd': old['szdd'],
-        'geo_api_info': old['old_city'],
-        'old_city': old['old_city'],
-        'geo_api_infot': old['geo_api_infot'],
-        'date': datetime.now(tz=pytz.timezone("Asia/Shanghai")).strftime("%Y-%m-%d"),
-        'jcjgqk': old['jcjgqk'],
-        'app_id': 'ucas'}
+        "id": old["id"],
+        "uid": old["uid"],
+        "date": datetime.now(tz=pytz.timezone("Asia/Shanghai")).strftime("%Y-%m-%d"),
+        "jzdz": old["jzdz"],
+        "zrzsdd": old["zrzsdd"],
+        "sfzx": old["sfzx"],
+        "szgj": old["szgj"],
+        "szdd": old["szdd"],
+        "dqszdd": old["dqszdd"],
+        "address": "北京市怀柔区",
+        "area": "怀柔区",
+        "province": "北京市",
+        "city": old["city"],
+        "geo_api_info": "{\"address\":\"北京市怀柔区\",\"details\":\"怀北镇中国科学院大学(雁栖湖校区)学园壹中国科学院大学雁栖湖校区西区\",\"province\":{\"label\":\"北京市\",\"value\":\"\"},\"city\":{\"label\":\"\",\"value\":\"\"},\"area\":{\"label\":\"怀柔区\",\"value\":\"\"}}",
+        "szgj_api_info": old["szgj_api_info"],
+        "szgj_select_info": old["szgj_select_info"],
+        "created": old["created"],
+        "dqsfzzgfxdq": old["dqsfzzgfxdq"],
+        "zgfxljs": old["zgfxljs"],
+        "tw": old["tw"],
+        "sffrzz": old["sffrzz"],
+        "dqqk1": old["dqqk1"],
+        "dqqk1qt": old["dqqk1qt"],
+        "dqqk2": old["dqqk2"],
+        "dqqk2qt": old["dqqk2qt"],
+        "sfjshsjc": old["sfjshsjc"],
+        "dyzymjzqk": old["dyzymjzqk"],
+        "dyzjzsj": old["dyzjzsj"],
+        "dyzwjzyy": old["dyzwjzyy"],
+        "dezymjzqk": old["dezymjzqk"],
+        "dezjzsj": old["dezjzsj"],
+        "dezwjzyy": old["dezwjzyy"],
+        "dszymjzqk": old["dszymjzqk"],
+        "dszjzsj": old["dszjzsj"],
+        "dszwjzyy": old["dszwjzyy"],
+        "gtshryjkzk": old["gtshryjkzk"],
+        "extinfo": old["extinfo"],
+        "created_uid": old["created_uid"],
+        "todaysfhsjc": old["todaysfhsjc"],
+        "is_daily": old["is_daily"],
+        "geo_api_infot": "{\"address\":\"北京市怀柔区\",\"details\":\"怀北镇中国科学院大学(雁栖湖校区)学园壹中国科学院大学雁栖湖校区西区\",\"province\":{\"label\":\"北京市\",\"value\":\"\"},\"city\":{\"label\":\"\",\"value\":\"\"},\"area\":{\"label\":\"怀柔区\",\"value\":\"\"}}",
+        "old_szdd": old["old_szdd"],
+        "old_city": "{\"address\":\"北京市怀柔区\",\"details\":\"怀北镇中国科学院大学(雁栖湖校区)学园壹中国科学院大学雁栖湖校区西区\",\"province\":{\"label\":\"北京市\",\"value\":\"\"},\"city\":{\"label\":\"\",\"value\":\"\"},\"area\":{\"label\":\"怀柔区\",\"value\":\"\"}}",
+        "number": old["number"],
+        "realname": old["realname"],
+        'app_id': 'ucas',
+    }
 
-    r = s.post("https://app.ucas.ac.cn/ncov/api/default/save", data=new_daily)
+    r = s.post("https://app.ucas.ac.cn/ucasncov/api/default/save", data=new_daily)
     print("提交信息:", new_daily)
     # print(r.text)
     result = r.json()
     if result.get('m') == "操作成功":
         print("打卡成功")
         if api_key:
-            message(api_key, result.get('m'), new_daily)
+            message(api_key, "每天打卡成功", new_daily)
     else:
         print("打卡失败，错误信息: ", r.json().get("m"))
         if api_key:
