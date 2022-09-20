@@ -7,13 +7,26 @@ license: CC BY-NC-SA 3.0
 import pytz
 import requests
 from datetime import datetime
+import base64
+import configparser
 
 s = requests.Session()
 
-user = "username"    # sep账号
-passwd = "password"   # sep密码
-api_key = ""  # server酱的api，填了可以微信通知打卡结果，不填没影响
+def read_config():
+    user = ""    # sep账号
+    passwd = ""   # sep密码 在setting里面填写加密的密文
+    api_key = ""  # server酱的api，填了可以微信通知打卡结果，不填没影响
+    config = configparser.ConfigParser()
+    config.read('setting.ini')
+    if 'username' in config['DEFAULT']:
+        user = config['DEFAULT']['username']
+    if 'passwd' in config['DEFAULT']:
+        passwd = str(base64.b64decode(config['DEFAULT']['passwd']), 'utf-8')
+    if 'api_key' in config['DEFAULT']:
+        api_key = config['DEFAULT']['api_key']
+    return user, passwd, api_key
 
+user, passwd, api_key = read_config()
 
 def login(s: requests.Session, username, password):
     # r = s.get(
@@ -52,7 +65,7 @@ def submit(s: requests.Session, old: dict):
         "date": datetime.now(tz=pytz.timezone("Asia/Shanghai")).strftime("%Y-%m-%d"),
         "jzdz": old["jzdz"],
         "zrzsdd": old["zrzsdd"],
-        "sfzx": old["sfzx"],
+        "sfzx": "1", # 1 是
         "szgj": old["szgj"],
         "szdd": old["szdd"],
         "dqszdd": old["dqszdd"],
@@ -72,7 +85,7 @@ def submit(s: requests.Session, old: dict):
         "dqqk1qt": old["dqqk1qt"],
         "dqqk2": old["dqqk2"],
         "dqqk2qt": old["dqqk2qt"],
-        "sfjshsjc": old["sfjshsjc"],
+        "sfjshsjc": "1", # 是否核酸检测 1 - 是 0 - 否
         "dyzymjzqk": old["dyzymjzqk"],
         "dyzjzsj": old["dyzjzsj"],
         "dyzwjzyy": old["dyzwjzyy"],
@@ -85,7 +98,7 @@ def submit(s: requests.Session, old: dict):
         "gtshryjkzk": old["gtshryjkzk"],
         "extinfo": old["extinfo"],
         "created_uid": old["created_uid"],
-        "todaysfhsjc": old["todaysfhsjc"],
+        "todaysfhsjc": "",
         "is_daily": old["is_daily"],
         "geo_api_infot": "{\"address\":\"北京市怀柔区\",\"details\":\"怀北镇中国科学院大学(雁栖湖校区)学园壹中国科学院大学雁栖湖校区西区\",\"province\":{\"label\":\"北京市\",\"value\":\"\"},\"city\":{\"label\":\"\",\"value\":\"\"},\"area\":{\"label\":\"怀柔区\",\"value\":\"\"}}",
         "old_szdd": old["old_szdd"],

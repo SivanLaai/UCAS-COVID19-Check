@@ -8,15 +8,16 @@ license: CC BY-NC-SA 3.0
 import pytz
 import requests
 from datetime import datetime
+import base64
 
 
 s = requests.Session()
 
 user = "USERNAME"    # sep账号
-passwd = "PASSWORD"   # sep密码
+passwd = "PASSWORD"   # sep密码,填写加密的密文
 api_key = ""  # server酱的api，填了可以微信通知打卡结果，不填没影响
 
-
+passwd = str(base64.b64decode(passwd), 'utf-8')
 def login(s: requests.Session, username, password):
     # r = s.get(
     #     "https://app.ucas.ac.cn/uc/wap/login?redirect=https%3A%2F%2Fapp.ucas.ac.cn%2Fsite%2FapplicationSquare%2Findex%3Fsid%3D2")
