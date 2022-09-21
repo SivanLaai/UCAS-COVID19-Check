@@ -19,9 +19,9 @@
 	- 2.（可选）在setting文件填写[server酱](http://sc.ftqq.com/3.version)的api_key，填写之后可以在程序完成打卡之后通知到微信，如果不填写不影响使用
 	- 3.放到服务器上，修改crontab，设定为每天八点半运行
 - 腾讯云服务器
-4. serverless.py 运行，第1步和第2步的信息都在脚本文件内填写(密码不用加密)
+	- 4.serverless.py 运行，第1步和第2步的信息都在脚本文件内填写(密码不用加密)
 - Github Action
-5. Github Action 请使用sub.py 运行，第1步和第2步的信息都在脚本文件内填写(密码不用加密)
+	- 5.Github Action 请使用sub.py 运行，第1步和第2步的信息都在脚本文件内填写(密码不用加密)
 ```
 30 8 * * * /usr/bin/python3  /root/UCAS-COVID19-Check/check.py >>/tmp/yqfk.log
 ```
