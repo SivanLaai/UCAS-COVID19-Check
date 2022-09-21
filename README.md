@@ -14,12 +14,16 @@
 理论上来说本程序适用于**国内大多数高校**的每日打卡，只需要替换代码中的提交网址并完成其他的适配性工作即可，其他学校有需求的同学可以修改本代码，但请遵守`CC BY-NC-SA 3.0` 许可协议。
 
 # 用法
-1. 修改setting文件内的sep账号和密码，密码是base64的密文
+- 自己有服务器
+1. 修改setting文件内的sep账号和密码，密码是base64的密文(因为在公用服务器上加密还是会安全一些)
 2. （可选）在setting文件填写[server酱](http://sc.ftqq.com/3.version)的api_key，填写之后可以在程序完成打卡之后通知到微信，如果不填写不影响使用
 3. 放到服务器上，修改crontab，设定为每天八点半运行
-4. 如果是想serverless.py 运行，第1步和第2步的信息都在脚本文件内填写
+- 腾讯云服务器
+4. serverless.py 运行，第1步和第2步的信息都在脚本文件内填写(密码不用加密)
+- Github Action
+5. Github Action 请使用sub.py 运行，第1步和第2步的信息都在脚本文件内填写(密码不用加密)
 ```
-30 8 * * * /usr/bin/python3  /root/ncov-ucas/yqfk.py >>/tmp/yqfk.log
+30 8 * * * /usr/bin/python3  /root/UCAS-COVID19-Check/check.py >>/tmp/yqfk.log
 ```
 
 
