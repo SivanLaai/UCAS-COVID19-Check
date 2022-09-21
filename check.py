@@ -8,12 +8,25 @@ import pytz
 import requests
 from datetime import datetime
 import base64
+import configparser
 
 s = requests.Session()
 
-user = ""    # sep账号
-passwd = ""   # sep密码
-api_key = ""  # server酱的api，填了可以微信通知打卡结果，不填没影响
+def read_config():
+    user = ""    # sep账号
+    passwd = ""   # sep密码 在setting里面填写加密的密文
+    api_key = ""  # server酱的api，填了可以微信通知打卡结果，不填没影响
+    config = configparser.ConfigParser()
+    config.read('setting.ini')
+    if 'username' in config['DEFAULT']:
+        user = config['DEFAULT']['username']
+    if 'passwd' in config['DEFAULT']:
+        passwd = str(base64.b64decode(config['DEFAULT']['passwd']), 'utf-8')
+    if 'api_key' in config['DEFAULT']:
+        api_key = config['DEFAULT']['api_key']
+    return user, passwd, api_key
+
+user, passwd, api_key = read_config()
 
 def login(s: requests.Session, username, password):
     # r = s.get(
@@ -111,6 +124,7 @@ def submit(s: requests.Session, old: dict):
         print("打卡失败，错误信息: ", r.json().get("m"))
         if api_key:
             message(api_key, result.get('m'), new_daily)
+
 
 def message(key, title, body):
     """

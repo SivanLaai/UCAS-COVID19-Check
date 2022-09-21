@@ -8,16 +8,14 @@ license: CC BY-NC-SA 3.0
 import pytz
 import requests
 from datetime import datetime
-import base64
 
 
 s = requests.Session()
 
 user = "USERNAME"    # sep账号
-passwd = "PASSWORD"   # sep密码,填写加密的密文
+passwd = "PASSWORD"   # sep密码
 api_key = ""  # server酱的api，填了可以微信通知打卡结果，不填没影响
 
-passwd = str(base64.b64decode(passwd), 'utf-8')
 def login(s: requests.Session, username, password):
     # r = s.get(
     #     "https://app.ucas.ac.cn/uc/wap/login?redirect=https%3A%2F%2Fapp.ucas.ac.cn%2Fsite%2FapplicationSquare%2Findex%3Fsid%3D2")
@@ -32,6 +30,8 @@ def login(s: requests.Session, username, password):
     if r.json().get('m') != "操作成功":
         print(r.text)
         print("登录失败")
+        if api_key:
+            message(api_key, "登录失败", "")
         exit(1)
 
 
@@ -45,6 +45,8 @@ def get_daily(s: requests.Session):
         return daily.json()['d']
     else:
         print("获取昨日信息失败")
+        if api_key:
+            message(api_key, "获取昨日信息失败", "")
         exit(1)
 
 
